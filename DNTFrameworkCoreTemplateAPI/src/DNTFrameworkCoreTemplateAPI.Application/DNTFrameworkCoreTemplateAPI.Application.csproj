@@ -1,0 +1,22 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netstandard2.0</TargetFramework>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="DNTFrameworkCore.EntityFramework" Version="1.0.2" />
+      <PackageReference Include="DNTFrameworkCore.FluentValidation" Version="1.0.2" />
+      <PackageReference Include="Scrutor" Version="3.0.2" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\DNTFrameworkCoreTemplateAPI.Domain\DNTFrameworkCoreTemplateAPI.Domain.csproj" />
+      <ProjectReference Include="..\DNTFrameworkCoreTemplateAPI.Resources\DNTFrameworkCoreTemplateAPI.Resources.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Identity\Handlers" />
+    </ItemGroup>
+
+</Project>

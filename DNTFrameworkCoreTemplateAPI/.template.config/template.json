@@ -1,0 +1,11 @@
+{
+  "author": "GholamReza Rabbal <https://www.dotnettips.info/user/غلامرضا ربال>",
+  "classifications": [ "DNTFrameworkCore","DNTFramework", "DNTFramework", "DNT", "MVC", ".NET Core", "ASP.NET Core", "Web API"],
+  "name": "Empty DNTFrameworkCore API project",
+  "identity": "DNTFrameworkCoreTemplateAPI",
+  "shortName": "dntcore-api",
+  "tags": {
+    "language": "C#"
+  },
+  "sourceName": "DNTFrameworkCoreTemplateAPI"
+}
