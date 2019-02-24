@@ -57,9 +57,6 @@ namespace DNTFrameworkCoreTemplateAPI.IntegrationTests
                     .WithExpiration(ExpirationMode.Absolute, TimeSpan.FromMinutes(10))
                     .Build());
 
-            services.AddSingleton<IValidatorFactory, ServiceProviderValidatorFactory>();
-            services.AddValidatorsFromAssemblyContaining<IUserService>();
-
             services.AddDNTFramework()
                 .AddDataAnnotationValidation()
                 .AddModelValidation()

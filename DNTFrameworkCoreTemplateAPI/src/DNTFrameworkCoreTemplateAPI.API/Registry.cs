@@ -5,11 +5,9 @@ using Castle.Core.Internal;
 using DNTFrameworkCore.Dependency;
 using DNTFrameworkCore.Eventing;
 using DNTFrameworkCore.Localization;
-using DNTFrameworkCore.TestAPI;
 using DNTFrameworkCore.Web.Filters;
 using DNTFrameworkCore.Web.ModelBinders;
 using DNTFrameworkCoreTemplateAPI.API.Authentication;
-using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
@@ -91,8 +89,6 @@ namespace DNTFrameworkCoreTemplateAPI.API
                             : factory.Create(localizationResource.Name, localizationResource.Location);
                     };
                 })
-                .AddFluentValidation(configuration =>
-                    configuration.RegisterValidatorsFromAssemblyContaining<Program>())
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_2)
                 .ConfigureApiBehaviorOptions(options =>
                 {

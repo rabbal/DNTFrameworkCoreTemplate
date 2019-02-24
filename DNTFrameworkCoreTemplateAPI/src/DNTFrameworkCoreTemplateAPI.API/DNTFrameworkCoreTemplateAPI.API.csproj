@@ -6,9 +6,8 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="DNTFrameworkCore.Web" Version="1.0.2" />
-        <PackageReference Include="DNTFrameworkCore.Web.EntityFramework" Version="1.0.2" />
-        <PackageReference Include="FluentValidation.AspNetCore" Version="8.1.3" />
+        <PackageReference Include="DNTFrameworkCore.Web" Version="1.0.3" />
+        <PackageReference Include="DNTFrameworkCore.Web.EntityFramework" Version="1.0.3" />
         <PackageReference Include="Microsoft.AspNetCore.App" />
         <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
     </ItemGroup>

@@ -3,9 +3,11 @@ using Castle.DynamicProxy;
 using DNTFrameworkCore.Application.Services;
 using DNTFrameworkCore.Dependency;
 using DNTFrameworkCore.Eventing;
+using DNTFrameworkCore.FluentValidation;
 using DNTFrameworkCore.Transaction.Interception;
 using DNTFrameworkCore.Validation.Interception;
 using DNTFrameworkCoreTemplateAPI.Application.Configuration;
+using DNTFrameworkCoreTemplateAPI.Application.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -32,8 +34,12 @@ namespace DNTFrameworkCoreTemplateAPI.Application
                 .AsImplementedInterfaces()
                 .WithTransientLifetime());
 
-            foreach (var descriptor in services.Where(s => typeof(IApplicationService).IsAssignableFrom(s.ServiceType))
-                .ToList())
+            services.AddValidatorsFromAssembly(typeof(ApplicationRegistry).Assembly);
+
+            var applicationServices = services.Where(s => typeof(IApplicationService).IsAssignableFrom(s.ServiceType))
+                .ToList();
+            
+            foreach (var descriptor in applicationServices)
             {
                 services.Decorate(descriptor.ServiceType, (target, serviceProvider) =>
                     ProxyGenerator.CreateInterfaceProxyWithTargetInterface(
