@@ -5,8 +5,8 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="DNTFrameworkCore.EntityFramework" Version="1.0.3" />
-      <PackageReference Include="DNTFrameworkCore.FluentValidation" Version="1.0.3" />
+      <PackageReference Include="DNTFrameworkCore.EntityFramework" Version="1.1.1" />
+      <PackageReference Include="DNTFrameworkCore.FluentValidation" Version="1.1.1" />
       <PackageReference Include="Scrutor" Version="3.0.2" />
     </ItemGroup>
 

@@ -6,7 +6,7 @@ namespace DNTFrameworkCoreTemplateAPI.IntegrationTests.Stubs
 {
     public class StubEventBus : IEventBus
     {
-        public Task<Result> TriggerAsync<T>(T domainEvent) where T : IDomainEvent
+        public Task<Result> TriggerAsync<T>(T @event) where T : IBusinessEvent
         {
             return Task.FromResult(Result.Ok());
         }
