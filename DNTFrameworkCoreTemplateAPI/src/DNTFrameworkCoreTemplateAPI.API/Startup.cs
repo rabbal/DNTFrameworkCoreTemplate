@@ -17,6 +17,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
+using Swashbuckle.AspNetCore.SwaggerUI;
+using Swashbuckle.AspNetCore.Swagger;
+using System.Collections.Generic;
 
 namespace DNTFrameworkCoreTemplateAPI.API
 {
@@ -63,6 +66,39 @@ namespace DNTFrameworkCoreTemplateAPI.API
             services.AddResources();
             services.AddWeb();
             services.AddJwtAuthentication(Configuration);
+
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("api", new Info
+                {
+                    Version = "api",
+                    Title = "Services",
+                    Description = "DNTFramework API Services",
+                    Contact = new Contact
+                    {
+                        Email = "gholamrezarabbal@gmail.com",
+                        Name = "GholamReza Rabbal",
+                        Url = "http://www.dotnettips.info/user/%D8%BA%D9%84%D8%A7%D9%85%D8%B1%D8%B6%D8%A7%20%D8%B1%D8%A8%D8%A7%D9%84"
+                    }
+                });
+
+                c.AddSecurityDefinition("Bearer", new ApiKeyScheme()
+                {
+                    In = "header",
+                    Description = "JWT Authorization header using the Bearer scheme. Example: \"bearer {token}\"",
+                    Name = "Authorization",
+                    Type = "apiKey"
+                });
+
+                c.AddSecurityRequirement(new Dictionary<string, IEnumerable<string>>
+                {
+                    {"Bearer", new string[] { }},
+                    {"oauth2", new string[] { }}
+                });
+
+                c.EnableAnnotations();
+
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -116,6 +152,21 @@ namespace DNTFrameworkCoreTemplateAPI.API
             app.UseMvc();
             app.UseSignalR(routes => { routes.MapHub<NotificationHub>("/api/notificationhub"); });
             app.UseEFSecondLevelCache();
+
+            app.UseSwagger(c =>
+            {
+                c.PreSerializeFilters.Add((swaggerDoc, httpReq) => swaggerDoc.Host = httpReq.Host.Value);
+                c.RouteTemplate = "api-docs/{documentName}/swagger.json";
+
+            });
+
+            app.UseSwaggerUI(c =>
+            {
+                c.ShowExtensions();
+                c.SwaggerEndpoint($"/api-docs/api/swagger.json", "api");
+                c.DocExpansion(DocExpansion.None);
+                c.DocumentTitle = "Services";
+            });
         }
     }
 }

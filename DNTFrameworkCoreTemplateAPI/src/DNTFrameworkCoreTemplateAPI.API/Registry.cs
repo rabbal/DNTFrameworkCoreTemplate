@@ -55,6 +55,7 @@ namespace DNTFrameworkCoreTemplateAPI.API
                     options.UseDefaultFilteredPagedQueryModelBinder();
                     options.Filters.Add<GlobalExceptionFilter>();
                 })
+                .AddApiExplorer()
                 .AddCors(options =>
                 {
                     options.AddPolicy("CorsPolicy",
