@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DNTFrameworkCoreTemplateAPI.Infrastructure.Migrations
 {
     [DbContext(typeof(ProjectDbContext))]
-    [Migration("20190221205547_CreateInitialSchema")]
+    [Migration("20190310204652_CreateInitialSchema")]
     partial class CreateInitialSchema
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -114,36 +114,42 @@ namespace DNTFrameworkCoreTemplateAPI.Infrastructure.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<DateTimeOffset>("CreationDateTime");
-
-                    b.Property<string>("CreatorBrowserName")
-                        .HasMaxLength(1024);
-
-                    b.Property<string>("CreatorIp")
-                        .HasMaxLength(256);
-
-                    b.Property<long?>("CreatorUserId");
-
                     b.Property<int>("EventId");
 
                     b.Property<string>("Level")
                         .IsRequired()
                         .HasMaxLength(50);
 
-                    b.Property<string>("Logger")
+                    b.Property<string>("LoggerName")
                         .IsRequired()
                         .HasMaxLength(256);
 
                     b.Property<string>("Message")
                         .IsRequired();
 
+                    b.Property<DateTimeOffset>("Timestamp");
+
+                    b.Property<string>("UserBrowserName")
+                        .HasMaxLength(1024);
+
+                    b.Property<string>("UserDisplayName")
+                        .HasMaxLength(50);
+
+                    b.Property<string>("UserIP")
+                        .HasMaxLength(256);
+
+                    b.Property<long?>("UserId");
+
+                    b.Property<string>("UserName")
+                        .HasMaxLength(50);
+
                     b.HasKey("Id");
 
                     b.HasIndex("Level")
                         .HasName("IX_Log_Level");
 
-                    b.HasIndex("Logger")
-                        .HasName("IX_Log_Logger");
+                    b.HasIndex("LoggerName")
+                        .HasName("IX_Log_LoggerName");
 
                     b.ToTable("Log","dbo");
                 });

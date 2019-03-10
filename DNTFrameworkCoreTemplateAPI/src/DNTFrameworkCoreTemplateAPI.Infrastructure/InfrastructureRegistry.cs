@@ -18,8 +18,8 @@ namespace DNTFrameworkCoreTemplateAPI.Infrastructure
             IServiceCollection serviceCollection = new ServiceCollection();
             serviceCollection.AddLogging(builder =>
                 builder.AddConsole()
-                    //.AddFilter(category: DbLoggerCategory.Database.Command.Name, level: LogLevel.Information));
-                    .AddFilter(level => true)); // log everything
+                    .AddFilter(category: DbLoggerCategory.Database.Command.Name, level: LogLevel.Information));
+                    //.AddFilter(level => true)); // log everything
             return serviceCollection.BuildServiceProvider().GetRequiredService<ILoggerFactory>();
         }
         
@@ -43,8 +43,8 @@ namespace DNTFrameworkCoreTemplateAPI.Infrastructure
                     {
                         warnings.Throw(RelationalEventId.QueryClientEvaluationWarning);
                         warnings.Throw(CoreEventId.IncludeIgnoredWarning);
-                    })
-                    .UseLoggerFactory(BuildLoggerFactory());
+                    });
+                    //Todo:In Development UseLoggerFactory(BuildLoggerFactory());
             });
             
             services.AddEFSecondLevelCache();

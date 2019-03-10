@@ -6,8 +6,8 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="DNTFrameworkCore.Web" Version="1.1.1" />
-        <PackageReference Include="DNTFrameworkCore.Web.EntityFramework" Version="1.1.1" />
+        <PackageReference Include="DNTFrameworkCore.Web" Version="1.2.0" />
+        <PackageReference Include="DNTFrameworkCore.Web.EntityFramework" Version="1.2.0" />
         <PackageReference Include="Microsoft.AspNetCore.App" />
         <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
     </ItemGroup>

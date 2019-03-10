@@ -75,13 +75,15 @@ namespace DNTFrameworkCoreTemplateAPI.Infrastructure.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
-                    CreationDateTime = table.Column<DateTimeOffset>(nullable: false),
-                    CreatorBrowserName = table.Column<string>(maxLength: 1024, nullable: true),
-                    CreatorIp = table.Column<string>(maxLength: 256, nullable: true),
-                    CreatorUserId = table.Column<long>(nullable: true),
                     Message = table.Column<string>(nullable: false),
                     Level = table.Column<string>(maxLength: 50, nullable: false),
-                    Logger = table.Column<string>(maxLength: 256, nullable: false),
+                    Timestamp = table.Column<DateTimeOffset>(nullable: false),
+                    LoggerName = table.Column<string>(maxLength: 256, nullable: false),
+                    UserBrowserName = table.Column<string>(maxLength: 1024, nullable: true),
+                    UserIP = table.Column<string>(maxLength: 256, nullable: true),
+                    UserId = table.Column<long>(nullable: true),
+                    UserName = table.Column<string>(maxLength: 50, nullable: true),
+                    UserDisplayName = table.Column<string>(maxLength: 50, nullable: true),
                     EventId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
@@ -109,10 +111,10 @@ namespace DNTFrameworkCoreTemplateAPI.Infrastructure.Migrations
                 column: "Level");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Log_Logger",
+                name: "IX_Log_LoggerName",
                 schema: "dbo",
                 table: "Log",
-                column: "Logger");
+                column: "LoggerName");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
