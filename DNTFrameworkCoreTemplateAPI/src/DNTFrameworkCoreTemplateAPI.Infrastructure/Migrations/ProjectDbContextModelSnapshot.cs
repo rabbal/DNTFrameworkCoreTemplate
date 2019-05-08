@@ -112,42 +112,36 @@ namespace DNTFrameworkCoreTemplateAPI.Infrastructure.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<DateTimeOffset>("CreationDateTime");
+
+                    b.Property<string>("CreatorBrowserName")
+                        .HasMaxLength(1024);
+
+                    b.Property<string>("CreatorIp")
+                        .HasMaxLength(256);
+
+                    b.Property<long?>("CreatorUserId");
+
                     b.Property<int>("EventId");
 
                     b.Property<string>("Level")
                         .IsRequired()
                         .HasMaxLength(50);
 
-                    b.Property<string>("LoggerName")
+                    b.Property<string>("Logger")
                         .IsRequired()
                         .HasMaxLength(256);
 
                     b.Property<string>("Message")
                         .IsRequired();
 
-                    b.Property<DateTimeOffset>("Timestamp");
-
-                    b.Property<string>("UserBrowserName")
-                        .HasMaxLength(1024);
-
-                    b.Property<string>("UserDisplayName")
-                        .HasMaxLength(50);
-
-                    b.Property<string>("UserIP")
-                        .HasMaxLength(256);
-
-                    b.Property<long?>("UserId");
-
-                    b.Property<string>("UserName")
-                        .HasMaxLength(50);
-
                     b.HasKey("Id");
 
                     b.HasIndex("Level")
                         .HasName("IX_Log_Level");
 
-                    b.HasIndex("LoggerName")
-                        .HasName("IX_Log_LoggerName");
+                    b.HasIndex("Logger")
+                        .HasName("IX_Log_Logger");
 
                     b.ToTable("Log","dbo");
                 });

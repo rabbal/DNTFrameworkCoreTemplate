@@ -8,7 +8,6 @@ using DNTFrameworkCoreTemplateAPI.API.Hubs;
 using DNTFrameworkCoreTemplateAPI.Infrastructure;
 using DNTFrameworkCoreTemplateAPI.Infrastructure.Context;
 using DNTFrameworkCoreTemplateAPI.Resources;
-using EFSecondLevelCache.Core;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Hosting;
@@ -115,7 +114,6 @@ namespace DNTFrameworkCoreTemplateAPI.API
             app.UseAuthentication();
             app.UseMvc();
             app.UseSignalR(routes => { routes.MapHub<NotificationHub>("/api/notificationhub"); });
-            app.UseEFSecondLevelCache();
         }
     }
 }
