@@ -1,4 +1,5 @@
 using System.Linq;
+using AutoMapper;
 using Castle.DynamicProxy;
 using DNTFrameworkCore.Application.Services;
 using DNTFrameworkCore.Dependency;
@@ -19,6 +20,9 @@ namespace DNTFrameworkCoreTemplateAPI.Application
 
         public static void AddApplication(this IServiceCollection services)
         {
+            services.AddAutoMapper(typeof(ApplicationRegistry));
+            services.AddValidatorsFromAssembly(typeof(ApplicationRegistry).Assembly);
+
             services.Scan(scan => scan
                 .FromCallingAssembly()
                 .AddClasses(classes => classes.AssignableTo<ISingletonDependency>())
@@ -34,18 +38,16 @@ namespace DNTFrameworkCoreTemplateAPI.Application
                 .AsImplementedInterfaces()
                 .WithTransientLifetime());
 
-            services.AddValidatorsFromAssembly(typeof(ApplicationRegistry).Assembly);
-
             var applicationServices = services.Where(s => typeof(IApplicationService).IsAssignableFrom(s.ServiceType))
                 .ToList();
-            
+
             foreach (var descriptor in applicationServices)
             {
                 services.Decorate(descriptor.ServiceType, (target, serviceProvider) =>
                     ProxyGenerator.CreateInterfaceProxyWithTargetInterface(
                         descriptor.ServiceType,
                         target, serviceProvider.GetRequiredService<ValidationInterceptor>(),
-                        (IInterceptor) serviceProvider.GetRequiredService<TransactionInterceptor>()));
+                        (IInterceptor)serviceProvider.GetRequiredService<TransactionInterceptor>()));
             }
         }
     }

@@ -38,5 +38,6 @@ namespace DNTFrameworkCoreTemplateAPI.IntegrationTests.Stubs
         public MultiTenancySides MultiTenancySide { get; }
         public long? ImpersonatorUserId { get; }
         public long? ImpersonatorTenantId { get; }
+        public long? BranchId { get; }
     }
 }

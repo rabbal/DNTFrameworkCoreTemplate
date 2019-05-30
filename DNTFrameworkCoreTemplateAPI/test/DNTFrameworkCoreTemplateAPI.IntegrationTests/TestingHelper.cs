@@ -58,25 +58,10 @@ namespace DNTFrameworkCoreTemplateAPI.IntegrationTests
                     .Build());
 
             services.AddDNTFramework()
-                .AddDataAnnotationValidation()
                 .AddModelValidation()
                 .AddFluentModelValidation()
-                .AddValidationOptions(options =>
-                {
-                    /*options.IgnoredTypes.Add(typeof());*/
-                })
-                .AddMemoryCache()
-                .AddAuditingOptions(options =>
-                {
-                    // options.Enabled = true;
-                    // options.EnabledForAnonymousUsers = false;
-                    // options.IgnoredTypes.Add(typeof());
-                    // options.Selectors.Add(new NamedTypeSelector("SelectorName", type => type == typeof()));
-                }).AddTransactionOptions(options =>
-                {
-                    // options.Timeout=TimeSpan.FromMinutes(3);
-                    //options.IsolationLevel=IsolationLevel.ReadCommitted;
-                });
+                .AddTransaction();
+            services.AddMemoryCache();
             services.AddDNTUnitOfWork<ProjectDbContext>();
 
             //For IPasswordHasher Implementation

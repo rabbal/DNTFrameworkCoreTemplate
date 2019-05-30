@@ -31,32 +31,8 @@ namespace DNTFrameworkCoreTemplateAPI.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.Configure<ProjectSettings>(Configuration.Bind);
-            services.AddDNTFramework()
-                .AddDataAnnotationValidation()
-                .AddModelValidation()
-                .AddFluentModelValidation()
-                .AddValidationOptions(options =>
-                {
-                    /*options.IgnoredTypes.Add(typeof());*/
-                })
-                .AddMemoryCache()
-                .AddAuditingOptions(options =>
-                {
-                    // options.Enabled = true;
-                    // options.EnabledForAnonymousUsers = false;
-                    // options.IgnoredTypes.Add(typeof());
-                    // options.Selectors.Add(new NamedTypeSelector("SelectorName", type => type == typeof()));
-                }).AddTransactionOptions(options =>
-                {
-                    // options.Timeout=TimeSpan.FromMinutes(3);
-                    //options.IsolationLevel=IsolationLevel.ReadCommitted;
-                });
 
-            services.AddDNTProtectionRepository<ProjectDbContext>();
-            services.AddDNTCommonWeb()
-                .AddDNTDataProtection();
-
+            services.AddFramework(Configuration);
             services.AddInfrastructure(Configuration);
             services.AddApplication();
             services.AddResources();

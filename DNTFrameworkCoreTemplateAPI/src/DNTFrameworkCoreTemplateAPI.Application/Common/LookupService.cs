@@ -32,7 +32,7 @@ namespace DNTFrameworkCoreTemplateAPI.Application.Common
                 Value = role.Id
             }).ToListAsync();
 
-            return roles.AsReadOnly();
+            return roles;
         }
     }
 }

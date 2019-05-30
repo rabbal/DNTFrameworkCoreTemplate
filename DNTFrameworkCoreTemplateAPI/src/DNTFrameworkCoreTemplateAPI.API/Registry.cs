@@ -2,12 +2,18 @@ using System;
 using System.Text;
 using System.Threading.Tasks;
 using Castle.Core.Internal;
+using DNTFrameworkCore;
 using DNTFrameworkCore.Dependency;
+using DNTFrameworkCore.EntityFramework;
 using DNTFrameworkCore.Eventing;
+using DNTFrameworkCore.FluentValidation;
 using DNTFrameworkCore.Localization;
+using DNTFrameworkCore.Web;
 using DNTFrameworkCore.Web.Filters;
 using DNTFrameworkCore.Web.ModelBinders;
 using DNTFrameworkCoreTemplateAPI.API.Authentication;
+using DNTFrameworkCoreTemplateAPI.Application.Configuration;
+using DNTFrameworkCoreTemplateAPI.Infrastructure.Context;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
@@ -23,6 +29,20 @@ namespace DNTFrameworkCoreTemplateAPI.API
 {
     public static class Registry
     {
+        public static void AddFramework(this IServiceCollection services, IConfiguration configuration)
+        {
+            services.Configure<ProjectSettings>(configuration.Bind);
+            services.AddDNTFramework()
+                .AddModelValidation()
+                .AddTransaction()
+                .AddFluentModelValidation();
+
+            services
+            .AddMemoryCache()
+            .AddDNTCommonWeb()
+            .AddDNTDataProtection()
+            .AddDNTProtectionRepository<ProjectDbContext>();
+        }
         public static void AddWeb(this IServiceCollection services)
         {
             services.Scan(scan => scan
@@ -47,13 +67,13 @@ namespace DNTFrameworkCoreTemplateAPI.API
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
-            services.AddLocalization( setup => setup.ResourcesPath = "Resources");
+            services.AddLocalization(setup => setup.ResourcesPath = "Resources");
             services.AddHttpContextAccessor();
             services.AddMvcCore(options =>
                 {
                     // options.UseYeKeModelBinder();
                     options.UseDefaultFilteredPagedQueryModelBinder();
-                    options.Filters.Add<GlobalExceptionFilter>();
+                    options.Filters.Add<HandleExceptionFilter>();
                 })
                 .AddCors(options =>
                 {
@@ -96,7 +116,6 @@ namespace DNTFrameworkCoreTemplateAPI.API
             services.AddAntiforgery(x => x.HeaderName = "X-XSRF-TOKEN");
             services.AddSignalR();
         }
-
         public static void AddJwtAuthentication(this IServiceCollection services, IConfiguration configuration)
         {
             var authentication = configuration.GetSection("Authentication");

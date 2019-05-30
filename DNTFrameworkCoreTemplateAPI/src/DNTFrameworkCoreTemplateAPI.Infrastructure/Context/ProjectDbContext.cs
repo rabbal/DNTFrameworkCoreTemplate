@@ -1,9 +1,9 @@
 using System.Linq;
-using DNTFrameworkCore.EntityFramework.Auditing;
 using DNTFrameworkCore.EntityFramework.Caching;
 using DNTFrameworkCore.EntityFramework.Context;
-using DNTFrameworkCore.EntityFramework.DataProtection;
 using DNTFrameworkCore.EntityFramework.Logging;
+using DNTFrameworkCore.EntityFramework.Protection;
+using DNTFrameworkCore.Runtime;
 using DNTFrameworkCoreTemplateAPI.Infrastructure.Mappings.Identity;
 using EFSecondLevelCache.Core.Contracts;
 using Microsoft.EntityFrameworkCore;
@@ -13,16 +13,18 @@ namespace DNTFrameworkCoreTemplateAPI.Infrastructure.Context
 {
     public class ProjectDbContext : DbContextCore
     {
-        public ProjectDbContext(DbContextCoreDependency<ProjectDbContext> dependency) : base(dependency)
+        public ProjectDbContext(
+            IHookEngine hookEngine,
+            IUserSession session,
+            DbContextOptions<ProjectDbContext> options) : base(hookEngine, session, options)
         {
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyLogConfiguration();
-            modelBuilder.ApplyDataProtectionKeyConfiguration();
+            modelBuilder.ApplyProtectionKeyConfiguration();
             modelBuilder.ApplySqlCacheConfiguration();
-            modelBuilder.ApplyAuditLogConfiguration();
 
             modelBuilder.ApplyConfiguration(new UserConfiguration());
             modelBuilder.ApplyConfiguration(new UserTokenConfiguration());

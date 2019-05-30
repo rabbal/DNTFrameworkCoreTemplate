@@ -1,0 +1,73 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27130.2010
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DNTFrameworkCoreTemplateWebApp.WebApp", "src\DNTFrameworkCoreTemplateWebApp.WebApp\DNTFrameworkCoreTemplateWebApp.WebApp.csproj", "{45B58AE8-057B-4709-957D-0C3484AF4DB5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DNTFrameworkCoreTemplateWebApp.Domain", "src\DNTFrameworkCoreTemplateWebApp.Domain\DNTFrameworkCoreTemplateWebApp.Domain.csproj", "{B961401F-DACA-4AD8-8F5F-358FD0908069}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DNTFrameworkCoreTemplateWebApp.Resources", "src\DNTFrameworkCoreTemplateWebApp.Resources\DNTFrameworkCoreTemplateWebApp.Resources.csproj", "{8D18446E-0084-489C-8626-023862A1184C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DNTFrameworkCoreTemplateWebApp.Application", "src\DNTFrameworkCoreTemplateWebApp.Application\DNTFrameworkCoreTemplateWebApp.Application.csproj", "{6CCEDD11-B31F-4411-8AEF-F4B05512BAD3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DNTFrameworkCoreTemplateWebApp.Infrastructure", "src\DNTFrameworkCoreTemplateWebApp.Infrastructure\DNTFrameworkCoreTemplateWebApp.Infrastructure.csproj", "{DF02E43C-AFA9-4546-B2C1-BA93D1D8857B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DNTFrameworkCoreTemplateWebApp.Common", "src\DNTFrameworkCoreTemplateWebApp.Common\DNTFrameworkCoreTemplateWebApp.Common.csproj", "{6B5F02E7-588D-4459-A4E7-4B2DD465D95A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{1770ACD4-42D0-4EC6-B6E1-30522AB45EE3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DNTFrameworkCoreTemplateWebApp.IntegrationTests", "test\DNTFrameworkCoreTemplateWebApp.IntegrationTests\DNTFrameworkCoreTemplateWebApp.IntegrationTests.csproj", "{59FCC829-4EAC-4A90-85C4-BDBBF9D1F022}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DNTFrameworkCoreTemplateWebApp.UnitTests", "test\DNTFrameworkCoreTemplateWebApp.UnitTests\DNTFrameworkCoreTemplateWebApp.UnitTests.csproj", "{B397A2AD-503B-4D77-B39F-59ECFD75DF5B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{45B58AE8-057B-4709-957D-0C3484AF4DB5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{45B58AE8-057B-4709-957D-0C3484AF4DB5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{45B58AE8-057B-4709-957D-0C3484AF4DB5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{45B58AE8-057B-4709-957D-0C3484AF4DB5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B961401F-DACA-4AD8-8F5F-358FD0908069}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B961401F-DACA-4AD8-8F5F-358FD0908069}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B961401F-DACA-4AD8-8F5F-358FD0908069}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B961401F-DACA-4AD8-8F5F-358FD0908069}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8D18446E-0084-489C-8626-023862A1184C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8D18446E-0084-489C-8626-023862A1184C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8D18446E-0084-489C-8626-023862A1184C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8D18446E-0084-489C-8626-023862A1184C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6CCEDD11-B31F-4411-8AEF-F4B05512BAD3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6CCEDD11-B31F-4411-8AEF-F4B05512BAD3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6CCEDD11-B31F-4411-8AEF-F4B05512BAD3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6CCEDD11-B31F-4411-8AEF-F4B05512BAD3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DF02E43C-AFA9-4546-B2C1-BA93D1D8857B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DF02E43C-AFA9-4546-B2C1-BA93D1D8857B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DF02E43C-AFA9-4546-B2C1-BA93D1D8857B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DF02E43C-AFA9-4546-B2C1-BA93D1D8857B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6B5F02E7-588D-4459-A4E7-4B2DD465D95A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6B5F02E7-588D-4459-A4E7-4B2DD465D95A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6B5F02E7-588D-4459-A4E7-4B2DD465D95A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6B5F02E7-588D-4459-A4E7-4B2DD465D95A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{59FCC829-4EAC-4A90-85C4-BDBBF9D1F022}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{59FCC829-4EAC-4A90-85C4-BDBBF9D1F022}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{59FCC829-4EAC-4A90-85C4-BDBBF9D1F022}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{59FCC829-4EAC-4A90-85C4-BDBBF9D1F022}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B397A2AD-503B-4D77-B39F-59ECFD75DF5B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B397A2AD-503B-4D77-B39F-59ECFD75DF5B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B397A2AD-503B-4D77-B39F-59ECFD75DF5B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B397A2AD-503B-4D77-B39F-59ECFD75DF5B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{59FCC829-4EAC-4A90-85C4-BDBBF9D1F022} = {1770ACD4-42D0-4EC6-B6E1-30522AB45EE3}
+		{B397A2AD-503B-4D77-B39F-59ECFD75DF5B} = {1770ACD4-42D0-4EC6-B6E1-30522AB45EE3}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {1746E6E4-023A-4786-9CC2-604D3536483F}
+	EndGlobalSection
+EndGlobal

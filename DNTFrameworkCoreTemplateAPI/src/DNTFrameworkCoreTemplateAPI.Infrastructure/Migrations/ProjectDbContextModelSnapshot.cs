@@ -15,54 +15,9 @@ namespace DNTFrameworkCoreTemplateAPI.Infrastructure.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.2.2-servicing-10034")
+                .HasAnnotation("ProductVersion", "2.2.4-servicing-10062")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-            modelBuilder.Entity("DNTFrameworkCore.EntityFramework.Auditing.AuditLog", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Exception");
-
-                    b.Property<DateTimeOffset>("ExecutionDateTime");
-
-                    b.Property<int>("ExecutionDuration");
-
-                    b.Property<string>("ExtensionJson");
-
-                    b.Property<long?>("ImpersonatorTenantId");
-
-                    b.Property<long?>("ImpersonatorUserId");
-
-                    b.Property<string>("MethodName")
-                        .IsRequired()
-                        .HasMaxLength(256);
-
-                    b.Property<string>("Parameters");
-
-                    b.Property<string>("ReturnValue");
-
-                    b.Property<string>("ServiceName")
-                        .IsRequired()
-                        .HasMaxLength(256);
-
-                    b.Property<long?>("TenantId");
-
-                    b.Property<string>("UserBrowserName")
-                        .HasMaxLength(1024);
-
-                    b.Property<long?>("UserId");
-
-                    b.Property<string>("UserIp")
-                        .HasMaxLength(20);
-
-                    b.HasKey("Id");
-
-                    b.ToTable("AuditLog","dbo");
-                });
 
             modelBuilder.Entity("DNTFrameworkCore.EntityFramework.Caching.Cache", b =>
                 {
@@ -87,7 +42,52 @@ namespace DNTFrameworkCoreTemplateAPI.Infrastructure.Migrations
                     b.ToTable("Cache","dbo");
                 });
 
-            modelBuilder.Entity("DNTFrameworkCore.EntityFramework.DataProtection.DataProtectionKey", b =>
+            modelBuilder.Entity("DNTFrameworkCore.EntityFramework.Logging.Log", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("EventId");
+
+                    b.Property<string>("Level")
+                        .IsRequired()
+                        .HasMaxLength(50);
+
+                    b.Property<string>("LoggerName")
+                        .IsRequired()
+                        .HasMaxLength(256);
+
+                    b.Property<string>("Message")
+                        .IsRequired();
+
+                    b.Property<DateTimeOffset>("Timestamp");
+
+                    b.Property<string>("UserBrowserName")
+                        .HasMaxLength(1024);
+
+                    b.Property<string>("UserDisplayName")
+                        .HasMaxLength(50);
+
+                    b.Property<string>("UserIP")
+                        .HasMaxLength(256);
+
+                    b.Property<long?>("UserId");
+
+                    b.Property<string>("UserName")
+                        .HasMaxLength(50);
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Level")
+                        .HasName("IX_Log_Level");
+
+                    b.HasIndex("LoggerName")
+                        .HasName("IX_Log_LoggerName");
+
+                    b.ToTable("Log","dbo");
+                });
+
+            modelBuilder.Entity("DNTFrameworkCore.EntityFramework.Protection.ProtectionKey", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -102,48 +102,9 @@ namespace DNTFrameworkCoreTemplateAPI.Infrastructure.Migrations
 
                     b.HasIndex("FriendlyName")
                         .IsUnique()
-                        .HasName("IX_DataProtectionKey_FriendlyName");
+                        .HasName("IX_ProtectionKey_FriendlyName");
 
-                    b.ToTable("DataProtectionKey","dbo");
-                });
-
-            modelBuilder.Entity("DNTFrameworkCore.EntityFramework.Logging.Log", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<DateTimeOffset>("CreationDateTime");
-
-                    b.Property<string>("CreatorBrowserName")
-                        .HasMaxLength(1024);
-
-                    b.Property<string>("CreatorIp")
-                        .HasMaxLength(256);
-
-                    b.Property<long?>("CreatorUserId");
-
-                    b.Property<int>("EventId");
-
-                    b.Property<string>("Level")
-                        .IsRequired()
-                        .HasMaxLength(50);
-
-                    b.Property<string>("Logger")
-                        .IsRequired()
-                        .HasMaxLength(256);
-
-                    b.Property<string>("Message")
-                        .IsRequired();
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("Level")
-                        .HasName("IX_Log_Level");
-
-                    b.HasIndex("Logger")
-                        .HasName("IX_Log_Logger");
-
-                    b.ToTable("Log","dbo");
+                    b.ToTable("ProtectionKey","dbo");
                 });
 
             modelBuilder.Entity("DNTFrameworkCoreTemplateAPI.Domain.Identity.Permission", b =>

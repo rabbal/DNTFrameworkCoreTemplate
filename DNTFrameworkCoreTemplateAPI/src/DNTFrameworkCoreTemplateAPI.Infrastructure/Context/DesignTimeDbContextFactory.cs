@@ -36,8 +36,7 @@ namespace DNTFrameworkCoreTemplateAPI.Infrastructure.Context
 
             builder.UseSqlServer(connectionString);
 
-            return new ProjectDbContext(new DbContextCoreDependency<ProjectDbContext>(provider.GetService<IHookEngine>(),
-                provider.GetService<IUserSession>(), builder.Options));
+            return new ProjectDbContext(provider.GetService<IHookEngine>(), provider.GetService<IUserSession>(), builder.Options);
         }
 
         private class StubHookEngine : IHookEngine
@@ -76,6 +75,8 @@ namespace DNTFrameworkCoreTemplateAPI.Infrastructure.Context
             public IReadOnlyList<string> Permissions => throw new NotImplementedException();
 
             public IReadOnlyList<string> Roles => throw new NotImplementedException();
+
+            public long? BranchId => null;
 
             public IDisposable Use(long? tenantId, long? userId)
             {

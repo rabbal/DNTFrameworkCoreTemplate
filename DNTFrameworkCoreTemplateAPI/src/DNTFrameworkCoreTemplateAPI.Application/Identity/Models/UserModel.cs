@@ -1,9 +1,10 @@
 using System.Collections.Generic;
+using System.Linq;
 using DNTFrameworkCore.Application.Models;
-
+using DNTFrameworkCore.Extensions;
 namespace DNTFrameworkCoreTemplateAPI.Application.Identity.Models
 {
-    public class UserModel : MasterModel
+    public class UserModel : MasterModel<long>
     {
         public string UserName { get; set; }
         public string DisplayName { get; set; }
@@ -12,5 +13,13 @@ namespace DNTFrameworkCoreTemplateAPI.Application.Identity.Models
         public ICollection<UserRoleModel> Roles { get; set; } = new HashSet<UserRoleModel>();
         public ICollection<PermissionModel> Permissions { get; set; } = new HashSet<PermissionModel>();
         public ICollection<PermissionModel> IgnoredPermissions { get; set; } = new HashSet<PermissionModel>();
+        public bool ShouldApplySerialNumber() =>
+        IsNew() || !IsActive || !Password.IsEmpty() ||
+        Roles.Any(a => a.IsNew() || a.IsDeleted()) ||
+        IgnoredPermissions.Any(p => p.IsDeleted() || p.IsNew()) ||
+        Permissions.Any(p => p.IsDeleted() || p.IsNew());
+
+        public bool ShouldApplyPasswordHash() =>
+            IsNew() || !Password.IsEmpty();
     }
 }

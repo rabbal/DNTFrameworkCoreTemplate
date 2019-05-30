@@ -12,33 +12,6 @@ namespace DNTFrameworkCoreTemplateAPI.Infrastructure.Migrations
                 name: "dbo");
 
             migrationBuilder.CreateTable(
-                name: "AuditLog",
-                schema: "dbo",
-                columns: table => new
-                {
-                    Id = table.Column<long>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    TenantId = table.Column<long>(nullable: true),
-                    UserId = table.Column<long>(nullable: true),
-                    ServiceName = table.Column<string>(maxLength: 256, nullable: false),
-                    MethodName = table.Column<string>(maxLength: 256, nullable: false),
-                    Parameters = table.Column<string>(nullable: true),
-                    ReturnValue = table.Column<string>(nullable: true),
-                    ExecutionDateTime = table.Column<DateTimeOffset>(nullable: false),
-                    ExecutionDuration = table.Column<int>(nullable: false),
-                    UserIp = table.Column<string>(maxLength: 20, nullable: true),
-                    UserBrowserName = table.Column<string>(maxLength: 1024, nullable: true),
-                    Exception = table.Column<string>(nullable: true),
-                    ImpersonatorUserId = table.Column<long>(nullable: true),
-                    ImpersonatorTenantId = table.Column<long>(nullable: true),
-                    ExtensionJson = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_AuditLog", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Cache",
                 schema: "dbo",
                 columns: table => new
@@ -52,21 +25,6 @@ namespace DNTFrameworkCoreTemplateAPI.Infrastructure.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Cache", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "DataProtectionKey",
-                schema: "dbo",
-                columns: table => new
-                {
-                    Id = table.Column<long>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    FriendlyName = table.Column<string>(nullable: false),
-                    XmlValue = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_DataProtectionKey", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -91,18 +49,26 @@ namespace DNTFrameworkCoreTemplateAPI.Infrastructure.Migrations
                     table.PrimaryKey("PK_Log", x => x.Id);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "ProtectionKey",
+                schema: "dbo",
+                columns: table => new
+                {
+                    Id = table.Column<long>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    FriendlyName = table.Column<string>(nullable: false),
+                    XmlValue = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ProtectionKey", x => x.Id);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_Cache_ExpiresAtTime",
                 schema: "dbo",
                 table: "Cache",
                 column: "ExpiresAtTime");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_DataProtectionKey_FriendlyName",
-                schema: "dbo",
-                table: "DataProtectionKey",
-                column: "FriendlyName",
-                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Log_Level",
@@ -115,24 +81,27 @@ namespace DNTFrameworkCoreTemplateAPI.Infrastructure.Migrations
                 schema: "dbo",
                 table: "Log",
                 column: "LoggerName");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ProtectionKey_FriendlyName",
+                schema: "dbo",
+                table: "ProtectionKey",
+                column: "FriendlyName",
+                unique: true);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "AuditLog",
-                schema: "dbo");
-
-            migrationBuilder.DropTable(
                 name: "Cache",
                 schema: "dbo");
 
             migrationBuilder.DropTable(
-                name: "DataProtectionKey",
+                name: "Log",
                 schema: "dbo");
 
             migrationBuilder.DropTable(
-                name: "Log",
+                name: "ProtectionKey",
                 schema: "dbo");
         }
     }

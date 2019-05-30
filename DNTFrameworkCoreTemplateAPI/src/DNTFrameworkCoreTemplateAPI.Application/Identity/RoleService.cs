@@ -1,7 +1,11 @@
+using System;
 using System.Linq;
+using AutoMapper;
 using DNTFrameworkCore.Application.Models;
 using DNTFrameworkCore.Application.Services;
 using DNTFrameworkCore.EntityFramework.Application;
+using DNTFrameworkCore.EntityFramework.Context;
+using DNTFrameworkCore.Eventing;
 using DNTFrameworkCoreTemplateAPI.Application.Identity.Models;
 using DNTFrameworkCoreTemplateAPI.Domain.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -14,8 +18,10 @@ namespace DNTFrameworkCoreTemplateAPI.Application.Identity
 
     public class RoleService : CrudService<Role, long, RoleReadModel, RoleModel>, IRoleService
     {
-        public RoleService(CrudServiceDependency dependency) : base(dependency)
+        private readonly IMapper _mapper;
+        public RoleService(IUnitOfWork uow, IEventBus bus, IMapper mapper) : base(uow, bus)
         {
+            _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
 
         protected override IQueryable<Role> BuildFindQuery()
@@ -30,45 +36,18 @@ namespace DNTFrameworkCoreTemplateAPI.Application.Identity
             {
                 Id = r.Id,
                 Name = r.Name,
-                Description = r.Description,
-                RowVersion = r.RowVersion
+                Description = r.Description
             });
         }
 
-        protected override Role MapToEntity(RoleModel model)
+        protected override void MapToEntity(RoleModel model, Role role)
         {
-            return new Role
-            {
-                Id = model.Id,
-                RowVersion = model.RowVersion,
-                Name = model.Name,
-                NormalizedName =
-                    model.Name.ToUpperInvariant(), //Todo: In persian can use DNTPersianUtils.Core nuget package
-                Description = model.Description,
-                Permissions = model.Permissions.Select(p => new RolePermission
-                {
-                    Id = p.Id,
-                    Name = p.Name,
-                    TrackingState = p.TrackingState
-                }).ToList()
-            };
+            _mapper.Map(model, role);
         }
 
-        protected override RoleModel MapToModel(Role entity)
+        protected override RoleModel MapToModel(Role role)
         {
-            return new RoleModel
-            {
-                Id = entity.Id,
-                RowVersion = entity.RowVersion,
-                Name = entity.Name,
-                Description = entity.Description,
-                Permissions = entity.Permissions.Select(p => new PermissionModel
-                {
-                    Id = p.Id,
-                    Name = p.Name,
-                    TrackingState = p.TrackingState
-                }).ToList()
-            };
+            return _mapper.Map<RoleModel>(role);
         }
     }
 }
