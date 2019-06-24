@@ -6,8 +6,8 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="DNTFrameworkCore.Web" Version="2.0.0" />
-        <PackageReference Include="DNTFrameworkCore.Web.EntityFramework" Version="2.0.0" />
+        <PackageReference Include="DNTFrameworkCore.Web" Version="3.0.0" />
+        <PackageReference Include="DNTFrameworkCore.Web.EFCore" Version="3.0.0" />
         <PackageReference Include="Microsoft.AspNetCore.App" />
         <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
     </ItemGroup>
@@ -16,6 +16,22 @@
       <ProjectReference Include="..\DNTFrameworkCoreTemplateAPI.Application\DNTFrameworkCoreTemplateAPI.Application.csproj" />
       <ProjectReference Include="..\DNTFrameworkCoreTemplateAPI.Infrastructure\DNTFrameworkCoreTemplateAPI.Infrastructure.csproj" />
       <ProjectReference Include="..\DNTFrameworkCoreTemplateAPI.Resources\DNTFrameworkCoreTemplateAPI.Resources.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Compile Remove="Logs\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <EmbeddedResource Remove="Logs\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Remove="Logs\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Content Remove="Logs\**" />
     </ItemGroup>
 
 </Project>

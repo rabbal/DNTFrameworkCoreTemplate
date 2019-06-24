@@ -1,11 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using DNTFrameworkCore.EntityFramework.Context;
-using DNTFrameworkCore.EntityFramework.Context.Hooks;
+using DNTFrameworkCore.EFCore.Context.Hooks;
 using DNTFrameworkCore.MultiTenancy;
 using DNTFrameworkCore.Runtime;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -41,11 +41,11 @@ namespace DNTFrameworkCoreTemplateAPI.Infrastructure.Context
 
         private class StubHookEngine : IHookEngine
         {
-            public void ExecutePostActionHooks(IEnumerable<HookedEntityEntry> modifiedEntries)
+            public void RunPostHooks(IEnumerable<EntityEntry> entries)
             {
             }
 
-            public void ExecutePreActionHooks(IEnumerable<HookedEntityEntry> modifiedEntries)
+            public void RunPreHooks(IEnumerable<EntityEntry> entries)
             {
             }
         }
@@ -54,7 +54,7 @@ namespace DNTFrameworkCoreTemplateAPI.Infrastructure.Context
         {
             public bool IsAuthenticated => throw new NotImplementedException();
 
-            public long? UserId => throw new NotImplementedException();
+            public long? UserId => null;
 
             public string UserName => throw new NotImplementedException();
 

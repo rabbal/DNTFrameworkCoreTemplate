@@ -3,13 +3,10 @@ using AutoMapper;
 using Castle.DynamicProxy;
 using DNTFrameworkCore.Application.Services;
 using DNTFrameworkCore.Dependency;
+using DNTFrameworkCore.EFCore.Transaction;
 using DNTFrameworkCore.Eventing;
 using DNTFrameworkCore.FluentValidation;
-using DNTFrameworkCore.Transaction.Interception;
 using DNTFrameworkCore.Validation.Interception;
-using DNTFrameworkCoreTemplateAPI.Application.Configuration;
-using DNTFrameworkCoreTemplateAPI.Application.Identity;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace DNTFrameworkCoreTemplateAPI.Application
@@ -21,6 +18,7 @@ namespace DNTFrameworkCoreTemplateAPI.Application
         public static void AddApplication(this IServiceCollection services)
         {
             services.AddAutoMapper(typeof(ApplicationRegistry));
+            services.AddFluentModelValidation();
             services.AddValidatorsFromAssembly(typeof(ApplicationRegistry).Assembly);
 
             services.Scan(scan => scan

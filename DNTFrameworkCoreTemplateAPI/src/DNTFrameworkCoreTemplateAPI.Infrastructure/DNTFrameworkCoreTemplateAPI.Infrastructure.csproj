@@ -7,8 +7,9 @@
   <ItemGroup>
     <PackageReference Include="CacheManager.Microsoft.Extensions.Caching.Memory" Version="1.2.0" />
     <PackageReference Include="CacheManager.Serialization.Json" Version="1.2.0" />
-    <PackageReference Include="DNTFrameworkCore.EntityFramework" Version="2.0.0" />
-    <PackageReference Include="EFSecondLevelCache.Core" Version="2.3.0" />
+    <PackageReference Include="DNTFrameworkCore.EFCore" Version="3.0.0" />
+    <PackageReference Include="DNTFrameworkCore.EFCore.SqlServer" Version="3.0.0" />
+    <PackageReference Include="EFSecondLevelCache.Core" Version="2.4.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.2.4" />
     <PackageReference Include="Microsoft.Extensions.Configuration.FileExtensions" Version="2.2.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="2.2.0" />
@@ -16,6 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\DNTFrameworkCoreTemplateAPI.Common\DNTFrameworkCoreTemplateAPI.Common.csproj" />
     <ProjectReference Include="..\DNTFrameworkCoreTemplateAPI.Domain\DNTFrameworkCoreTemplateAPI.Domain.csproj" />
   </ItemGroup>
 

@@ -1,15 +1,12 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using AutoMapper;
 using DNTFrameworkCore.Application.Models;
 using DNTFrameworkCore.Application.Services;
 using DNTFrameworkCore.Cryptography;
-using DNTFrameworkCore.EntityFramework.Application;
-using DNTFrameworkCore.EntityFramework.Context;
+using DNTFrameworkCore.EFCore.Application;
+using DNTFrameworkCore.EFCore.Context;
 using DNTFrameworkCore.Eventing;
-using DNTFrameworkCore.Extensions;
 using DNTFrameworkCoreTemplateAPI.Application.Identity.Models;
 using DNTFrameworkCoreTemplateAPI.Domain.Identity;
 using Microsoft.EntityFrameworkCore;

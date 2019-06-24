@@ -1,5 +1,5 @@
 using System.Security.Claims;
-using DNTFrameworkCore.Domain.Entities.Tracking;
+using DNTFrameworkCore.Domain;
 using DNTFrameworkCore.Runtime;
 
 namespace DNTFrameworkCoreTemplateAPI.Domain.Identity
@@ -8,7 +8,7 @@ namespace DNTFrameworkCoreTemplateAPI.Domain.Identity
     /// Base Class For TPH Inheritance Strategy
     /// Storage of System's Permissions
     /// </summary>
-    public abstract class Permission : ModificationTrackingEntity
+    public abstract class Permission : TrackableEntity
     {
         public const int MaxNameLength = 128;
 

@@ -2,7 +2,7 @@ using System;
 using CacheManager.Core;
 using DNTFrameworkCore;
 using DNTFrameworkCore.Dependency;
-using DNTFrameworkCore.EntityFramework;
+using DNTFrameworkCore.EFCore;
 using DNTFrameworkCore.Eventing;
 using DNTFrameworkCore.Localization;
 using DNTFrameworkCoreTemplateAPI.Application.Identity;
@@ -48,8 +48,8 @@ namespace DNTFrameworkCoreTemplateAPI.UnitTests
             services.AddLocalization();
             services.AddNullLocalization();
             services.AddResources();
-            services.AddDNTFramework();
-            services.AddDNTUnitOfWork<ProjectDbContext>();
+            services.AddDNTFrameworkCore();
+            services.AddEFCore<ProjectDbContext>();
             services.AddEFSecondLevelCache();
             services.AddSingleton(typeof(ICacheManager<>), typeof(BaseCacheManager<>));
             services.AddSingleton(typeof(ICacheManagerConfiguration),

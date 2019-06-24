@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
 using DNTFrameworkCore.Dependency;
-using DNTFrameworkCore.Domain.Entities;
-using DNTFrameworkCore.EntityFramework.Context;
+using DNTFrameworkCore.Domain;
+using DNTFrameworkCore.EFCore.Context;
 using DNTFrameworkCoreTemplateAPI.Application.Identity.Models;
 using DNTFrameworkCoreTemplateAPI.Application.Identity.Validators;
 using DNTFrameworkCoreTemplateAPI.Domain.Identity;

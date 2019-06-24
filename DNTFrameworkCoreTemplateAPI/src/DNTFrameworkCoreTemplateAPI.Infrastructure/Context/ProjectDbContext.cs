@@ -1,8 +1,10 @@
 using System.Linq;
-using DNTFrameworkCore.EntityFramework.Caching;
-using DNTFrameworkCore.EntityFramework.Context;
-using DNTFrameworkCore.EntityFramework.Logging;
-using DNTFrameworkCore.EntityFramework.Protection;
+using DNTFrameworkCore.EFCore.Caching;
+using DNTFrameworkCore.EFCore.Context;
+using DNTFrameworkCore.EFCore.Context.Hooks;
+using DNTFrameworkCore.EFCore.Logging;
+using DNTFrameworkCore.EFCore.Protection;
+using DNTFrameworkCore.EFCore.SqlServer.Numbering;
 using DNTFrameworkCore.Runtime;
 using DNTFrameworkCoreTemplateAPI.Infrastructure.Mappings.Identity;
 using EFSecondLevelCache.Core.Contracts;
@@ -23,6 +25,7 @@ namespace DNTFrameworkCoreTemplateAPI.Infrastructure.Context
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyLogConfiguration();
+            modelBuilder.ApplyNumberedEntityConfiguration();
             modelBuilder.ApplyProtectionKeyConfiguration();
             modelBuilder.ApplySqlCacheConfiguration();
 
@@ -38,10 +41,10 @@ namespace DNTFrameworkCoreTemplateAPI.Infrastructure.Context
             base.OnModelCreating(modelBuilder);
         }
 
-        protected override void AfterSaveChanges(SaveChangeContext context)
+        protected override void AfterSaveChanges(EntityChangeContext context)
         {
             this.GetService<IEFCacheServiceProvider>()
-                .InvalidateCacheDependencies(context.ChangedEntityNames.ToArray());
+                .InvalidateCacheDependencies(context.EntityNames.ToArray());
         }
     }
 }

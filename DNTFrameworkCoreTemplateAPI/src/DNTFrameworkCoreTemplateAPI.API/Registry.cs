@@ -4,16 +4,13 @@ using System.Threading.Tasks;
 using Castle.Core.Internal;
 using DNTFrameworkCore;
 using DNTFrameworkCore.Dependency;
-using DNTFrameworkCore.EntityFramework;
 using DNTFrameworkCore.Eventing;
-using DNTFrameworkCore.FluentValidation;
 using DNTFrameworkCore.Localization;
 using DNTFrameworkCore.Web;
 using DNTFrameworkCore.Web.Filters;
 using DNTFrameworkCore.Web.ModelBinders;
 using DNTFrameworkCoreTemplateAPI.API.Authentication;
 using DNTFrameworkCoreTemplateAPI.Application.Configuration;
-using DNTFrameworkCoreTemplateAPI.Infrastructure.Context;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
@@ -32,16 +29,13 @@ namespace DNTFrameworkCoreTemplateAPI.API
         public static void AddFramework(this IServiceCollection services, IConfiguration configuration)
         {
             services.Configure<ProjectSettings>(configuration.Bind);
-            services.AddDNTFramework()
-                .AddModelValidation()
-                .AddTransaction()
-                .AddFluentModelValidation();
+            services.AddDNTFrameworkCore()
+                .AddModelValidation();
 
             services
-            .AddMemoryCache()
-            .AddDNTCommonWeb()
-            .AddDNTDataProtection()
-            .AddDNTProtectionRepository<ProjectDbContext>();
+                .AddMemoryCache()
+                .AddDNTCommonWeb()
+                .AddDNTDataProtection();
         }
         public static void AddWeb(this IServiceCollection services)
         {

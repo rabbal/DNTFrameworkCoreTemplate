@@ -1,4 +1,4 @@
-using DNTFrameworkCore.EntityFramework.Context;
+using DNTFrameworkCore.EFCore.Context;
 
 namespace DNTFrameworkCoreTemplateAPI.UnitTests
 {

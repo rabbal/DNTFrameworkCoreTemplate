@@ -4,25 +4,21 @@ using System.Reflection;
 using CacheManager.Core;
 using DNTFrameworkCore;
 using DNTFrameworkCore.Dependency;
-using DNTFrameworkCore.EntityFramework;
+using DNTFrameworkCore.EFCore;
 using DNTFrameworkCore.Eventing;
 using DNTFrameworkCore.FluentValidation;
 using DNTFrameworkCore.Localization;
 using DNTFrameworkCore.Web;
 using DNTFrameworkCoreTemplateAPI.Application;
-using DNTFrameworkCoreTemplateAPI.Application.Identity;
 using DNTFrameworkCoreTemplateAPI.Infrastructure.Context;
 using DNTFrameworkCoreTemplateAPI.IntegrationTests.Stubs;
 using DNTFrameworkCoreTemplateAPI.Resources;
 using EFSecondLevelCache.Core;
-using FluentValidation;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
-using Newtonsoft.Json.Serialization;
-using ConfigurationBuilder = Microsoft.Extensions.Configuration.ConfigurationBuilder;
 
 namespace DNTFrameworkCoreTemplateAPI.IntegrationTests
 {
@@ -46,8 +42,7 @@ namespace DNTFrameworkCoreTemplateAPI.IntegrationTests
             services.AddLocalization();
             services.AddNullLocalization();
             services.AddResources();
-            services.AddDNTFramework();
-            services.AddDNTUnitOfWork<ProjectDbContext>();
+            services.AddEFCore<ProjectDbContext>();
             services.AddEFSecondLevelCache();
             services.AddSingleton(typeof(ICacheManager<>), typeof(BaseCacheManager<>));
             services.AddSingleton(typeof(ICacheManagerConfiguration),
@@ -57,12 +52,10 @@ namespace DNTFrameworkCoreTemplateAPI.IntegrationTests
                     .WithExpiration(ExpirationMode.Absolute, TimeSpan.FromMinutes(10))
                     .Build());
 
-            services.AddDNTFramework()
+            services.AddDNTFrameworkCore()
                 .AddModelValidation()
-                .AddFluentModelValidation()
-                .AddTransaction();
+                .AddFluentModelValidation();
             services.AddMemoryCache();
-            services.AddDNTUnitOfWork<ProjectDbContext>();
 
             //For IPasswordHasher Implementation
             services.AddDNTCommonWeb();

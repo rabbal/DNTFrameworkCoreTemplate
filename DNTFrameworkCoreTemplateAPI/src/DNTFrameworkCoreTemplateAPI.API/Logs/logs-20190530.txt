@@ -1735,3 +1735,88 @@ VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9, @p10);
 SET NOCOUNT ON;
 INSERT INTO [dbo].[Log] ([Id], [EventId], [Level], [LoggerName], [Message], [Timestamp], [UserBrowserName], [UserDisplayName], [UserIP], [UserId], [UserName])
 VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9, @p10);
+2019-05-30 21:34:06.983 +00:00 [Information] DNTFrameworkCoreTemplateAPI.Infrastructure.Context.ProjectDbContext [0] : Migrating database associated with context ProjectDbContext
+2019-05-30 21:34:07.402 +00:00 [Warning] Microsoft.EntityFrameworkCore.Model.Validation [Microsoft.EntityFrameworkCore.Infrastructure.SensitiveDataLoggingEnabledWarning] : Sensitive data logging is enabled. Log entries and exception messages may include sensitive application data, this mode should only be enabled during development.
+2019-05-30 21:34:07.494 +00:00 [Information] Microsoft.EntityFrameworkCore.Infrastructure [Microsoft.EntityFrameworkCore.Infrastructure.ContextInitialized] : Entity Framework Core 2.2.4-servicing-10062 initialized 'ProjectDbContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer' with options: SensitiveDataLoggingEnabled CommandTimeout=180 MigrationsHistoryTable=dbo.MigrationHistory 
+2019-05-30 21:34:07.569 +00:00 [Information] Microsoft.EntityFrameworkCore.Infrastructure [Microsoft.EntityFrameworkCore.Infrastructure.ContextInitialized] : Entity Framework Core 2.2.4-servicing-10062 initialized 'ProjectDbContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer' with options: SensitiveDataLoggingEnabled CommandTimeout=180 MigrationsHistoryTable=dbo.MigrationHistory 
+2019-05-30 21:34:07.896 +00:00 [Information] Microsoft.EntityFrameworkCore.Database.Command [Microsoft.EntityFrameworkCore.Database.Command.CommandExecuted] : Executed DbCommand (13ms) [Parameters=[], CommandType='Text', CommandTimeout='180']
+SELECT OBJECT_ID(N'[dbo].[MigrationHistory]');
+2019-05-30 21:34:07.903 +00:00 [Information] Microsoft.EntityFrameworkCore.Database.Command [Microsoft.EntityFrameworkCore.Database.Command.CommandExecuted] : Executed DbCommand (4ms) [Parameters=[], CommandType='Text', CommandTimeout='180']
+SELECT OBJECT_ID(N'[dbo].[MigrationHistory]');
+2019-05-30 21:34:07.914 +00:00 [Information] Microsoft.EntityFrameworkCore.Database.Command [Microsoft.EntityFrameworkCore.Database.Command.CommandExecuted] : Executed DbCommand (6ms) [Parameters=[], CommandType='Text', CommandTimeout='180']
+SELECT [MigrationId], [ProductVersion]
+FROM [dbo].[MigrationHistory]
+ORDER BY [MigrationId];
+2019-05-30 21:34:07.934 +00:00 [Information] Microsoft.EntityFrameworkCore.Migrations [Microsoft.EntityFrameworkCore.Migrations.MigrationsNotApplied] : No migrations were applied. The database is already up to date.
+2019-05-30 21:34:08.233 +00:00 [Information] Microsoft.EntityFrameworkCore.Database.Command [Microsoft.EntityFrameworkCore.Database.Command.CommandExecuted] : Executed DbCommand (147ms) [Parameters=[@p0='2289621a-4f06-4e3d-892e-08d6e5468bde', @p1='0', @p2='Information' (Nullable = false) (Size = 50), @p3='DNTFrameworkCoreTemplateAPI.Infrastructure.Context.ProjectDbContext' (Nullable = false) (Size = 256), @p4='2019-05-30 21:34:06.968 +00:00 [Information] DNTFrameworkCoreTemplateAPI.Infrastructure.Context.ProjectDbContext [0] : Migrating database associated with context ProjectDbContext' (Nullable = false) (Size = 4000), @p5='2019-05-30T21:34:06.9680324+00:00', @p6='' (Size = 1024), @p7='' (Size = 50), @p8='' (Size = 256), @p9='' (DbType = Int64), @p10='' (Size = 50)], CommandType='Text', CommandTimeout='180']
+SET NOCOUNT ON;
+INSERT INTO [dbo].[Log] ([Id], [EventId], [Level], [LoggerName], [Message], [Timestamp], [UserBrowserName], [UserDisplayName], [UserIP], [UserId], [UserName])
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9, @p10);
+2019-05-30 21:34:08.613 +00:00 [Information] Microsoft.EntityFrameworkCore.Database.Command [Microsoft.EntityFrameworkCore.Database.Command.CommandExecuted] : Executed DbCommand (10ms) [Parameters=[], CommandType='Text', CommandTimeout='180']
+SELECT TOP(1) [r].[Id], [r].[CreationDateTime], [r].[CreatorBrowserName], [r].[CreatorIp], [r].[CreatorUserId], [r].[Description], [r].[LastModificationDateTime], [r].[LastModifierBrowserName], [r].[LastModifierIp], [r].[LastModifierUserId], [r].[Name], [r].[NormalizedName], [r].[RowVersion]
+FROM [Role] AS [r]
+WHERE [r].[Name] = N'Administrators'
+ORDER BY [r].[Id]
+2019-05-30 21:34:08.823 +00:00 [Information] Microsoft.EntityFrameworkCore.Database.Command [Microsoft.EntityFrameworkCore.Database.Command.CommandExecuted] : Executed DbCommand (80ms) [Parameters=[], CommandType='Text', CommandTimeout='180']
+SELECT [r.Permissions].[Id], [r.Permissions].[Discriminator], [r.Permissions].[IsGranted], [r.Permissions].[LastModificationDateTime], [r.Permissions].[LastModifierBrowserName], [r.Permissions].[LastModifierIp], [r.Permissions].[LastModifierUserId], [r.Permissions].[Name], [r.Permissions].[RoleId]
+FROM [Permission] AS [r.Permissions]
+INNER JOIN (
+    SELECT TOP(1) [r0].[Id]
+    FROM [Role] AS [r0]
+    WHERE [r0].[Name] = N'Administrators'
+    ORDER BY [r0].[Id]
+) AS [t] ON [r.Permissions].[RoleId] = [t].[Id]
+WHERE [r.Permissions].[Discriminator] = N'RolePermission'
+ORDER BY [t].[Id]
+2019-05-30 21:34:08.902 +00:00 [Information] DNTFrameworkCoreTemplateAPI.Application.Common.DbSeed [0] : Seed: Administrators role already exists.
+2019-05-30 21:34:08.908 +00:00 [Information] DNTFrameworkCoreTemplateAPI.Application.Common.DbSeed [0] : Seed: newPermissions: 
+2019-05-30 21:34:09.018 +00:00 [Information] Microsoft.EntityFrameworkCore.Database.Command [Microsoft.EntityFrameworkCore.Database.Command.CommandExecuted] : Executed DbCommand (6ms) [Parameters=[@__ToUpperInvariant_0='ADMIN' (Size = 256)], CommandType='Text', CommandTimeout='180']
+SELECT TOP(1) [u].[Id], [u].[CreationDateTime], [u].[CreatorBrowserName], [u].[CreatorIp], [u].[CreatorUserId], [u].[DisplayName], [u].[IsActive], [u].[LastLoggedInDateTime], [u].[LastModificationDateTime], [u].[LastModifierBrowserName], [u].[LastModifierIp], [u].[LastModifierUserId], [u].[NormalizedDisplayName], [u].[NormalizedUserName], [u].[PasswordHash], [u].[RowVersion], [u].[SerialNumber], [u].[UserName]
+FROM [User] AS [u]
+WHERE [u].[NormalizedUserName] = @__ToUpperInvariant_0
+ORDER BY [u].[Id]
+2019-05-30 21:34:09.090 +00:00 [Information] Microsoft.EntityFrameworkCore.Database.Command [Microsoft.EntityFrameworkCore.Database.Command.CommandExecuted] : Executed DbCommand (7ms) [Parameters=[@__ToUpperInvariant_0='ADMIN' (Size = 256)], CommandType='Text', CommandTimeout='180']
+SELECT [u.Permissions].[Id], [u.Permissions].[Discriminator], [u.Permissions].[IsGranted], [u.Permissions].[LastModificationDateTime], [u.Permissions].[LastModifierBrowserName], [u.Permissions].[LastModifierIp], [u.Permissions].[LastModifierUserId], [u.Permissions].[Name], [u.Permissions].[UserId]
+FROM [Permission] AS [u.Permissions]
+INNER JOIN (
+    SELECT TOP(1) [u0].[Id]
+    FROM [User] AS [u0]
+    WHERE [u0].[NormalizedUserName] = @__ToUpperInvariant_0
+    ORDER BY [u0].[Id]
+) AS [t] ON [u.Permissions].[UserId] = [t].[Id]
+WHERE [u.Permissions].[Discriminator] = N'UserPermission'
+ORDER BY [t].[Id]
+2019-05-30 21:34:09.104 +00:00 [Information] Microsoft.EntityFrameworkCore.Database.Command [Microsoft.EntityFrameworkCore.Database.Command.CommandExecuted] : Executed DbCommand (9ms) [Parameters=[@__ToUpperInvariant_0='ADMIN' (Size = 256)], CommandType='Text', CommandTimeout='180']
+SELECT [u.Roles].[Id], [u.Roles].[CreationDateTime], [u.Roles].[CreatorBrowserName], [u.Roles].[CreatorIp], [u.Roles].[CreatorUserId], [u.Roles].[RoleId], [u.Roles].[UserId]
+FROM [UserRole] AS [u.Roles]
+INNER JOIN (
+    SELECT TOP(1) [u1].[Id]
+    FROM [User] AS [u1]
+    WHERE [u1].[NormalizedUserName] = @__ToUpperInvariant_0
+    ORDER BY [u1].[Id]
+) AS [t0] ON [u.Roles].[UserId] = [t0].[Id]
+ORDER BY [t0].[Id]
+2019-05-30 21:34:09.123 +00:00 [Information] DNTFrameworkCoreTemplateAPI.Application.Common.DbSeed [0] : Seed: Admin user already exists.
+2019-05-30 21:34:09.124 +00:00 [Information] DNTFrameworkCoreTemplateAPI.Application.Common.DbSeed [0] : Seed: Admin user already is assigned to Administrators role.
+2019-05-30 21:34:09.222 +00:00 [Information] DNTFrameworkCoreTemplateAPI.Infrastructure.Context.ProjectDbContext [0] : Migrated database associated with context ProjectDbContext
+2019-05-30 21:34:09.300 +00:00 [Information] Microsoft.EntityFrameworkCore.Infrastructure [Microsoft.EntityFrameworkCore.Infrastructure.ContextInitialized] : Entity Framework Core 2.2.4-servicing-10062 initialized 'ProjectDbContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer' with options: SensitiveDataLoggingEnabled CommandTimeout=180 MigrationsHistoryTable=dbo.MigrationHistory 
+2019-05-30 21:34:09.325 +00:00 [Information] Microsoft.EntityFrameworkCore.Database.Command [Microsoft.EntityFrameworkCore.Database.Command.CommandExecuted] : Executed DbCommand (3ms) [Parameters=[], CommandType='Text', CommandTimeout='180']
+SELECT [k].[XmlValue]
+FROM [dbo].[ProtectionKey] AS [k]
+2019-05-30 21:34:09.484 +00:00 [Information] Microsoft.EntityFrameworkCore.Infrastructure [Microsoft.EntityFrameworkCore.Infrastructure.ContextInitialized] : Entity Framework Core 2.2.4-servicing-10062 initialized 'ProjectDbContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer' with options: SensitiveDataLoggingEnabled CommandTimeout=180 MigrationsHistoryTable=dbo.MigrationHistory 
+2019-05-30 21:34:09.514 +00:00 [Information] Microsoft.EntityFrameworkCore.Database.Command [Microsoft.EntityFrameworkCore.Database.Command.CommandExecuted] : Executed DbCommand (19ms) [Parameters=[@p0='9306395b-5dd1-48eb-892f-08d6e5468bde', @p1='0', @p2='Information' (Nullable = false) (Size = 50), @p3='DNTFrameworkCoreTemplateAPI.Application.Common.DbSeed' (Nullable = false) (Size = 256), @p4='2019-05-30 21:34:08.902 +00:00 [Information] DNTFrameworkCoreTemplateAPI.Application.Common.DbSeed [0] : Seed: Administrators role already exists.' (Nullable = false) (Size = 4000), @p5='2019-05-30T21:34:08.9022892+00:00', @p6='' (Size = 1024), @p7='' (Size = 50), @p8='' (Size = 256), @p9='' (DbType = Int64), @p10='' (Size = 50), @p11='e843a684-0ec0-4f62-8930-08d6e5468bde', @p12='0', @p13='Information' (Nullable = false) (Size = 50), @p14='DNTFrameworkCoreTemplateAPI.Application.Common.DbSeed' (Nullable = false) (Size = 256), @p15='2019-05-30 21:34:08.908 +00:00 [Information] DNTFrameworkCoreTemplateAPI.Application.Common.DbSeed [0] : Seed: newPermissions:' (Nullable = false) (Size = 4000), @p16='2019-05-30T21:34:08.9083823+00:00', @p17='' (Size = 1024), @p18='' (Size = 50), @p19='' (Size = 256), @p20='' (DbType = Int64), @p21='' (Size = 50), @p22='27965e74-ac2a-4eb6-8931-08d6e5468bde', @p23='0', @p24='Information' (Nullable = false) (Size = 50), @p25='DNTFrameworkCoreTemplateAPI.Application.Common.DbSeed' (Nullable = false) (Size = 256), @p26='2019-05-30 21:34:09.123 +00:00 [Information] DNTFrameworkCoreTemplateAPI.Application.Common.DbSeed [0] : Seed: Admin user already exists.' (Nullable = false) (Size = 4000), @p27='2019-05-30T21:34:09.1236385+00:00', @p28='' (Size = 1024), @p29='' (Size = 50), @p30='' (Size = 256), @p31='' (DbType = Int64), @p32='' (Size = 50), @p33='ceafb893-ea8d-42ca-8932-08d6e5468bde', @p34='0', @p35='Information' (Nullable = false) (Size = 50), @p36='DNTFrameworkCoreTemplateAPI.Application.Common.DbSeed' (Nullable = false) (Size = 256), @p37='2019-05-30 21:34:09.124 +00:00 [Information] DNTFrameworkCoreTemplateAPI.Application.Common.DbSeed [0] : Seed: Admin user already is assigned to Administrators role.' (Nullable = false) (Size = 4000), @p38='2019-05-30T21:34:09.1242391+00:00', @p39='' (Size = 1024), @p40='' (Size = 50), @p41='' (Size = 256), @p42='' (DbType = Int64), @p43='' (Size = 50), @p44='dd0f95ce-23a4-4555-8933-08d6e5468bde', @p45='0', @p46='Information' (Nullable = false) (Size = 50), @p47='DNTFrameworkCoreTemplateAPI.Infrastructure.Context.ProjectDbContext' (Nullable = false) (Size = 256), @p48='2019-05-30 21:34:09.222 +00:00 [Information] DNTFrameworkCoreTemplateAPI.Infrastructure.Context.ProjectDbContext [0] : Migrated database associated with context ProjectDbContext' (Nullable = false) (Size = 4000), @p49='2019-05-30T21:34:09.2229272+00:00', @p50='' (Size = 1024), @p51='' (Size = 50), @p52='' (Size = 256), @p53='' (DbType = Int64), @p54='' (Size = 50)], CommandType='Text', CommandTimeout='180']
+SET NOCOUNT ON;
+INSERT INTO [dbo].[Log] ([Id], [EventId], [Level], [LoggerName], [Message], [Timestamp], [UserBrowserName], [UserDisplayName], [UserIP], [UserId], [UserName])
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9, @p10),
+(@p11, @p12, @p13, @p14, @p15, @p16, @p17, @p18, @p19, @p20, @p21),
+(@p22, @p23, @p24, @p25, @p26, @p27, @p28, @p29, @p30, @p31, @p32),
+(@p33, @p34, @p35, @p36, @p37, @p38, @p39, @p40, @p41, @p42, @p43),
+(@p44, @p45, @p46, @p47, @p48, @p49, @p50, @p51, @p52, @p53, @p54);
+2019-05-30 21:34:10.096 +00:00 [Information] DNTFrameworkCore.Web.Hosting.QueuedHostedService [0] : Queued Hosted Service is starting.
+2019-05-30 21:34:10.526 +00:00 [Information] Microsoft.EntityFrameworkCore.Infrastructure [Microsoft.EntityFrameworkCore.Infrastructure.ContextInitialized] : Entity Framework Core 2.2.4-servicing-10062 initialized 'ProjectDbContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer' with options: SensitiveDataLoggingEnabled CommandTimeout=180 MigrationsHistoryTable=dbo.MigrationHistory 
+2019-05-30 21:34:10.534 +00:00 [Information] Microsoft.EntityFrameworkCore.Database.Command [Microsoft.EntityFrameworkCore.Database.Command.CommandExecuted] : Executed DbCommand (1ms) [Parameters=[@p0='6e4818c7-a167-47ad-8934-08d6e5468bde', @p1='0', @p2='Information' (Nullable = false) (Size = 50), @p3='DNTFrameworkCore.Web.Hosting.QueuedHostedService' (Nullable = false) (Size = 256), @p4='2019-05-30 21:34:10.096 +00:00 [Information] DNTFrameworkCore.Web.Hosting.QueuedHostedService [0] : Queued Hosted Service is starting.' (Nullable = false) (Size = 4000), @p5='2019-05-30T21:34:10.0968091+00:00', @p6='' (Size = 1024), @p7='' (Size = 50), @p8='' (Size = 256), @p9='' (DbType = Int64), @p10='' (Size = 50)], CommandType='Text', CommandTimeout='180']
+SET NOCOUNT ON;
+INSERT INTO [dbo].[Log] ([Id], [EventId], [Level], [LoggerName], [Message], [Timestamp], [UserBrowserName], [UserDisplayName], [UserIP], [UserId], [UserName])
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9, @p10);
+2019-05-30 21:34:15.445 +00:00 [Information] Microsoft.AspNetCore.Hosting.Internal.WebHost [1] : Request starting HTTP/1.1 GET https://localhost:6001/  
+2019-05-30 21:34:15.785 +00:00 [Information] Microsoft.AspNetCore.Hosting.Internal.WebHost [2] : Request finished in 341.1194ms 404 

@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DNTFrameworkCoreTemplateAPI.Infrastructure.Migrations
 {
     [DbContext(typeof(ProjectDbContext))]
-    [Migration("20190530212339_CreateInitialSchema")]
+    [Migration("20190624233857_CreateInitialSchema")]
     partial class CreateInitialSchema
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -21,7 +21,7 @@ namespace DNTFrameworkCoreTemplateAPI.Infrastructure.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("DNTFrameworkCore.EntityFramework.Caching.Cache", b =>
+            modelBuilder.Entity("DNTFrameworkCore.Caching.Cache", b =>
                 {
                     b.Property<string>("Id")
                         .ValueGeneratedOnAdd()
@@ -44,7 +44,27 @@ namespace DNTFrameworkCoreTemplateAPI.Infrastructure.Migrations
                     b.ToTable("Cache","dbo");
                 });
 
-            modelBuilder.Entity("DNTFrameworkCore.EntityFramework.Logging.Log", b =>
+            modelBuilder.Entity("DNTFrameworkCore.Cryptography.ProtectionKey", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("FriendlyName")
+                        .IsRequired();
+
+                    b.Property<string>("XmlValue");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("FriendlyName")
+                        .IsUnique()
+                        .HasName("IX_ProtectionKey_FriendlyName");
+
+                    b.ToTable("ProtectionKey","dbo");
+                });
+
+            modelBuilder.Entity("DNTFrameworkCore.Logging.Log", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
@@ -89,24 +109,26 @@ namespace DNTFrameworkCoreTemplateAPI.Infrastructure.Migrations
                     b.ToTable("Log","dbo");
                 });
 
-            modelBuilder.Entity("DNTFrameworkCore.EntityFramework.Protection.ProtectionKey", b =>
+            modelBuilder.Entity("DNTFrameworkCore.Numbering.NumberedEntity", b =>
                 {
-                    b.Property<long>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("FriendlyName")
-                        .IsRequired();
+                    b.Property<string>("EntityName")
+                        .IsRequired()
+                        .HasMaxLength(256)
+                        .IsUnicode(false);
 
-                    b.Property<string>("XmlValue");
+                    b.Property<long>("NextNumber");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("FriendlyName")
+                    b.HasIndex("EntityName")
                         .IsUnique()
-                        .HasName("IX_ProtectionKey_FriendlyName");
+                        .HasName("UIX_NumberedEntity_EntityName");
 
-                    b.ToTable("ProtectionKey","dbo");
+                    b.ToTable("NumberedEntity");
                 });
 #pragma warning restore 612, 618
         }

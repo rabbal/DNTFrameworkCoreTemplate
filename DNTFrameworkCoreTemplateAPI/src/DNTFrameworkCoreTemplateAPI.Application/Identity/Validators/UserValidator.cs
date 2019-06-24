@@ -1,6 +1,6 @@
 using System;
 using System.Linq;
-using DNTFrameworkCore.EntityFramework.Context;
+using DNTFrameworkCore.EFCore.Context;
 using DNTFrameworkCore.FluentValidation;
 using DNTFrameworkCoreTemplateAPI.Application.Identity.Models;
 using DNTFrameworkCoreTemplateAPI.Domain.Identity;

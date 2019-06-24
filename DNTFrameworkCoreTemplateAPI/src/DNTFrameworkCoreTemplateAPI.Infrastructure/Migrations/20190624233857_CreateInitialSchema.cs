@@ -12,6 +12,20 @@ namespace DNTFrameworkCoreTemplateAPI.Infrastructure.Migrations
                 name: "dbo");
 
             migrationBuilder.CreateTable(
+                name: "NumberedEntity",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    EntityName = table.Column<string>(unicode: false, maxLength: 256, nullable: false),
+                    NextNumber = table.Column<long>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_NumberedEntity", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Cache",
                 schema: "dbo",
                 columns: table => new
@@ -65,6 +79,12 @@ namespace DNTFrameworkCoreTemplateAPI.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateIndex(
+                name: "UIX_NumberedEntity_EntityName",
+                table: "NumberedEntity",
+                column: "EntityName",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Cache_ExpiresAtTime",
                 schema: "dbo",
                 table: "Cache",
@@ -92,6 +112,9 @@ namespace DNTFrameworkCoreTemplateAPI.Infrastructure.Migrations
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "NumberedEntity");
+
             migrationBuilder.DropTable(
                 name: "Cache",
                 schema: "dbo");

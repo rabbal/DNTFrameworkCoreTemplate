@@ -1,7 +1,9 @@
 using System;
 using CacheManager.Core;
-using DNTFrameworkCore.EntityFramework;
+using DNTFrameworkCore.EFCore;
+using DNTFrameworkCore.EFCore.Context.Hooks;
 using DNTFrameworkCoreTemplateAPI.Infrastructure.Context;
+using DNTFrameworkCoreTemplateAPI.Infrastructure.Hooks;
 using EFSecondLevelCache.Core;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
@@ -26,7 +28,9 @@ namespace DNTFrameworkCoreTemplateAPI.Infrastructure
         public static void AddInfrastructure(this IServiceCollection services, IConfiguration configuration
         )
         {
-            services.AddDNTUnitOfWork<ProjectDbContext>();
+            services.AddEFCore<ProjectDbContext>();
+            services.AddTransient<IPreActionHook, PreInsertApplyCorrectYeKeHook>();
+            services.AddTransient<IPreActionHook, PreUpdateApplyCorrectYeKeHook>();
             services.AddDbContext<ProjectDbContext>(builder =>
             {
                 builder.EnableSensitiveDataLogging();

@@ -1,12 +1,7 @@
-﻿using DNTFrameworkCore;
-using DNTFrameworkCore.EntityFramework;
-using DNTFrameworkCore.FluentValidation;
-using DNTFrameworkCore.Web;
+﻿using DNTFrameworkCore.Web;
 using DNTFrameworkCoreTemplateAPI.Application;
-using DNTFrameworkCoreTemplateAPI.Application.Configuration;
 using DNTFrameworkCoreTemplateAPI.API.Hubs;
 using DNTFrameworkCoreTemplateAPI.Infrastructure;
-using DNTFrameworkCoreTemplateAPI.Infrastructure.Context;
 using DNTFrameworkCoreTemplateAPI.Resources;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics;

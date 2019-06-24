@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using DNTFrameworkCore.Cryptography;
 using DNTFrameworkCore.Dependency;
-using DNTFrameworkCore.EntityFramework.Context;
+using DNTFrameworkCore.EFCore.Context;
 using DNTFrameworkCoreTemplateAPI.Domain.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;

@@ -5,8 +5,8 @@ using System.Threading.Tasks;
 using DNTFrameworkCore.Application.Models;
 using DNTFrameworkCore.Collections;
 using DNTFrameworkCore.Dependency;
-using DNTFrameworkCore.Domain.Entities;
-using DNTFrameworkCore.EntityFramework.Context;
+using DNTFrameworkCore.Domain;
+using DNTFrameworkCore.EFCore.Context;
 using DNTFrameworkCore.Functional;
 using DNTFrameworkCoreTemplateAPI.Application.Identity;
 using DNTFrameworkCoreTemplateAPI.Application.Identity.Models;
@@ -98,7 +98,7 @@ namespace DNTFrameworkCoreTemplateAPI.IntegrationTests.Application
             var result = await _service.CreateAsync(model);
 
             //Assert
-            result.Succeeded.ShouldBeTrue();
+            result.Failed.ShouldBeFalse();
             _serviceProvider.RunScoped<IUnitOfWork>(uow =>
             {
                 var role = uow.Set<Role>().Include(r => r.Permissions).First(a => a.Name == model.Name);
@@ -146,7 +146,7 @@ namespace DNTFrameworkCoreTemplateAPI.IntegrationTests.Application
             var result = await _service.EditAsync(model);
 
             //Assert
-            result.Succeeded.ShouldBeTrue();
+            result.Failed.ShouldBeFalse();
 
             _serviceProvider.RunScoped<IUnitOfWork>(uow =>
             {

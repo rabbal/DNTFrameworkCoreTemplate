@@ -4,7 +4,7 @@ using DNTFrameworkCore.Authorization;
 using DNTFrameworkCore.Collections;
 using DNTFrameworkCore.Cryptography;
 using DNTFrameworkCore.Data;
-using DNTFrameworkCore.EntityFramework.Context;
+using DNTFrameworkCore.EFCore.Context;
 using DNTFrameworkCoreTemplateAPI.Application.Configuration;
 using DNTFrameworkCoreTemplateAPI.Domain.Identity;
 using Microsoft.EntityFrameworkCore;
