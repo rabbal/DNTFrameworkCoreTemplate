@@ -26,9 +26,8 @@ namespace DNTFrameworkCoreTemplateAPI.API
 {
     public static class Registry
     {
-        public static void AddFramework(this IServiceCollection services, IConfiguration configuration)
+        public static void AddFramework(this IServiceCollection services)
         {
-            services.Configure<ProjectSettings>(configuration.Bind);
             services.AddDNTFrameworkCore()
                 .AddModelValidation();
 

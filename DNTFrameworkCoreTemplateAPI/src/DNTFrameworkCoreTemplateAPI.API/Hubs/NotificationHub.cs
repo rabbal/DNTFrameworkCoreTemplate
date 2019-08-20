@@ -1,6 +1,5 @@
 using System;
 using System.Threading.Tasks;
-using DNTFrameworkCore.Runtime;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.SignalR;
 
@@ -9,13 +8,6 @@ namespace DNTFrameworkCoreTemplateAPI.API.Hubs
     [Authorize]
     public class NotificationHub : Hub
     {
-        private readonly IUserSession _session;
-
-        public NotificationHub(IUserSession session)
-        {
-            _session = session ?? throw new ArgumentNullException(nameof(session));
-        }
-
         public override async Task OnConnectedAsync()
         {
             //Todo: add Context.ConnectionId to Tenant group in MultiTenancy senarios

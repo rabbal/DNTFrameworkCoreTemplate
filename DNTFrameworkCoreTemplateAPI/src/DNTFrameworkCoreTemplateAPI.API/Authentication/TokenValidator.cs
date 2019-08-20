@@ -20,11 +20,11 @@ namespace DNTFrameworkCoreTemplateAPI.API.Authentication
 
     public class TokenValidator : ITokenValidator
     {
-        private readonly ITokenManager _token;
+        private readonly ITokenService _token;
         private readonly IUnitOfWork _uow;
         private readonly DbSet<User> _users;
 
-        public TokenValidator(ITokenManager token, IUnitOfWork uow)
+        public TokenValidator(ITokenService token, IUnitOfWork uow)
         {
             _token = token ?? throw new ArgumentNullException(nameof(token));
             _uow = uow ?? throw new ArgumentNullException(nameof(uow));
@@ -42,14 +42,14 @@ namespace DNTFrameworkCoreTemplateAPI.API.Authentication
                 return;
             }
 
-            var serialNumberClaim = claimsIdentity.FindFirst(DNTClaimTypes.SerialNumber);
+            var serialNumberClaim = claimsIdentity.FindFirst(UserClaimTypes.SerialNumber);
             if (serialNumberClaim == null)
             {
                 context.Fail("This is not our issued token. It has no serial-number.");
                 return;
             }
 
-            var userIdString = claimsIdentity.FindFirst(DNTClaimTypes.UserId).Value;
+            var userIdString = claimsIdentity.FindFirst(UserClaimTypes.UserId).Value;
             if (!long.TryParse(userIdString, out var userId))
             {
                 context.Fail("This is not our issued token. It has no user-id.");
@@ -64,21 +64,19 @@ namespace DNTFrameworkCoreTemplateAPI.API.Authentication
                 return;
             }
 
-            if (!(context.SecurityToken is JwtSecurityToken accessToken) ||
-                string.IsNullOrWhiteSpace(accessToken.RawData) ||
-                !await _token.IsValidTokenAsync(userId, accessToken.RawData))
+            if (!(context.SecurityToken is JwtSecurityToken token) ||
+                string.IsNullOrWhiteSpace(token.RawData) ||
+                !await _token.IsValidTokenAsync(userId, token.RawData))
             {
                 context.Fail("This token is not in our database.");
-                return;
             }
-
-            //TODO: Concurrency Issue when current user edit own account in user management because RowVersion changes
-            //await UpdateLastActivityDateAsync(user.Value);
         }
 
-        public async Task<Maybe<User>> FindUserAsync(long userId)
+        private async Task<Maybe<User>> FindUserAsync(long userId)
         {
-            return await _users.FindAsync(userId);
+            return await _users
+                .AsNoTracking()
+                .FirstOrDefaultAsync(a => a.Id == userId);
         }
     }
 }

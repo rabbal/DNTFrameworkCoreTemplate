@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Security.Claims;
 using DNTFrameworkCore.MultiTenancy;
 using DNTFrameworkCore.Runtime;
 
@@ -29,8 +30,10 @@ namespace DNTFrameworkCoreTemplateAPI.IntegrationTests.Stubs
         public bool IsAuthenticated { get; }
         public long? UserId { get; }
         public string UserName { get; }
+        public string BranchNumber { get; }
         public IReadOnlyList<string> Permissions { get; }
         public IReadOnlyList<string> Roles { get; }
+        public IReadOnlyList<Claim> Claims { get; }
         public string UserDisplayName { get; }
         public string UserBrowserName { get; }
         public string UserIP { get; }

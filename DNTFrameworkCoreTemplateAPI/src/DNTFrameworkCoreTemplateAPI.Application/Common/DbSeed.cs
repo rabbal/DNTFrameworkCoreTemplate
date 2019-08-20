@@ -16,13 +16,13 @@ namespace DNTFrameworkCoreTemplateAPI.Application.Common
     public class DbSeed : IDbSeed
     {
         private readonly IUnitOfWork _uow;
-        private readonly IOptionsSnapshot<ProjectSettings> _settings;
+        private readonly IOptionsSnapshot<ProjectOptions> _settings;
         private readonly IUserPassword _password;
         private readonly IPermissionService _permission;
         private readonly ILogger<DbSeed> _logger;
 
         public DbSeed(IUnitOfWork uow,
-            IOptionsSnapshot<ProjectSettings> settings,
+            IOptionsSnapshot<ProjectOptions> settings,
             IUserPassword password,
             IPermissionService permission,
             ILogger<DbSeed> logger)

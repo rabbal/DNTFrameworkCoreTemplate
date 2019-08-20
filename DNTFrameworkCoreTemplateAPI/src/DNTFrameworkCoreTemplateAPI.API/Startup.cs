@@ -1,6 +1,6 @@
-﻿using DNTFrameworkCore.Web;
-using DNTFrameworkCoreTemplateAPI.Application;
+﻿using DNTFrameworkCoreTemplateAPI.Application;
 using DNTFrameworkCoreTemplateAPI.API.Hubs;
+using DNTFrameworkCoreTemplateAPI.Application.Configuration;
 using DNTFrameworkCoreTemplateAPI.Infrastructure;
 using DNTFrameworkCoreTemplateAPI.Resources;
 using Microsoft.AspNetCore.Builder;
@@ -26,8 +26,9 @@ namespace DNTFrameworkCoreTemplateAPI.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
-            services.AddFramework(Configuration);
+            services.Configure<ProjectOptions>(Configuration.Bind);
+            
+            services.AddFramework();
             services.AddInfrastructure(Configuration);
             services.AddApplication();
             services.AddResources();
@@ -80,7 +81,6 @@ namespace DNTFrameworkCoreTemplateAPI.API
                 app.UseHsts();
             }
 
-            app.UseDNTFramework();
             app.UseHttpsRedirection();
             app.UseAuthentication();
             app.UseMvc();

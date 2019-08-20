@@ -1,4 +1,3 @@
-using System.Security.Claims;
 using DNTFrameworkCore.Domain;
 namespace DNTFrameworkCoreTemplateAPI.Domain.Identity
 {
@@ -11,16 +10,5 @@ namespace DNTFrameworkCoreTemplateAPI.Domain.Identity
 
         public Role Role { get; set; }
         public long RoleId { get; set; }
-
-        public Claim ToClaim()
-        {
-            return new Claim(ClaimType, ClaimValue);
-        }
-
-        public void InitializeFromClaim(Claim claim)
-        {
-            ClaimType = claim.Type;
-            ClaimValue = claim.Value;
-        }
     }
 }

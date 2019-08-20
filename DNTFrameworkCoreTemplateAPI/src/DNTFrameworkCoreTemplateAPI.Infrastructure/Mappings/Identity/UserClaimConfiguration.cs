@@ -8,7 +8,7 @@ namespace DNTFrameworkCoreTemplateAPI.Infrastructure.Mappings.Identity
     {
         public void Configure(EntityTypeBuilder<UserClaim> builder)
         {
-            builder.Property(a => a.ClaimType).IsRequired().HasMaxLength(RoleClaim.MaxClaimTypeLength);
+            builder.Property(a => a.ClaimType).IsRequired().HasMaxLength(UserClaim.MaxClaimTypeLength);
             builder.Property(a => a.ClaimValue).IsRequired();
 
             builder.ToTable(nameof(UserClaim));

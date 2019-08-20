@@ -25,7 +25,7 @@ namespace DNTFrameworkCoreTemplateAPI.API.Authentication
 
     public class AuthenticationService : IAuthenticationService
     {
-        private readonly ITokenManager _token;
+        private readonly ITokenService _token;
         private readonly IUnitOfWork _uow;
         private readonly IAntiforgeryService _antiforgery;
         private readonly IOptionsSnapshot<TokenOptions> _options;
@@ -36,7 +36,7 @@ namespace DNTFrameworkCoreTemplateAPI.API.Authentication
         private readonly DbSet<Role> _roles;
 
         public AuthenticationService(
-            ITokenManager token,
+            ITokenService token,
             IUnitOfWork uow,
             IAntiforgeryService antiforgery,
             IOptionsSnapshot<TokenOptions> options,
@@ -61,26 +61,28 @@ namespace DNTFrameworkCoreTemplateAPI.API.Authentication
             var maybe = await FindUserByNameAsync(userName);
             if (!maybe.HasValue)
             {
-                return SignInResult.Failed(_localizer["SignIn.Messages.Failure"]);
+                return SignInResult.Fail(_localizer["SignIn.Messages.Failure"]);
             }
 
             var user = maybe.Value;
 
             if (_password.VerifyHashedPassword(user.PasswordHash, password) == PasswordVerificationResult.Failed)
             {
-                return SignInResult.Failed(_localizer["SignIn.Messages.Failure"]);
+                return SignInResult.Fail(_localizer["SignIn.Messages.Failure"]);
             }
 
             if (!user.IsActive)
             {
-                return SignInResult.Failed(_localizer["SignIn.Messages.IsNotActive"]);
+                return SignInResult.Fail(_localizer["SignIn.Messages.IsNotActive"]);
             }
 
             var userId = user.Id;
 
             var claims = await BuildClaimsAsync(userId);
-            var token = await _token.BuildTokenAsync(userId, claims);
-            _antiforgery.RebuildCookies(claims);
+
+            var token = await _token.NewTokenAsync(userId, claims);
+
+            _antiforgery.AddTokenToResponse(claims);
 
             return SignInResult.Ok(token);
         }
@@ -93,7 +95,7 @@ namespace DNTFrameworkCoreTemplateAPI.API.Authentication
         {
             await _token.RevokeTokensAsync(_session.UserId);
 
-            _antiforgery.DeleteCookies();
+            _antiforgery.RemoveTokenFromResponse();
         }
 
         private async Task<IList<Claim>> BuildClaimsAsync(long userId)
@@ -111,15 +113,13 @@ namespace DNTFrameworkCoreTemplateAPI.API.Authentication
                     _options.Value.Issuer),
                 new Claim(JwtRegisteredClaimNames.Iat, DateTimeOffset.UtcNow.ToUnixTimeSeconds().ToString(),
                     ClaimValueTypes.Integer64, _options.Value.Issuer),
-                new Claim(DNTClaimTypes.UserId, user.Id.ToString(), ClaimValueTypes.Integer64,
+                new Claim(UserClaimTypes.UserId, user.Id.ToString(), ClaimValueTypes.Integer64,
                     _options.Value.Issuer),
-                new Claim(DNTClaimTypes.UserName, user.UserName, ClaimValueTypes.String,
+                new Claim(UserClaimTypes.UserName, user.UserName, ClaimValueTypes.String,
                     _options.Value.Issuer),
-                new Claim(DNTClaimTypes.DisplayName, user.DisplayName, ClaimValueTypes.String,
+                new Claim(UserClaimTypes.DisplayName, user.DisplayName, ClaimValueTypes.String,
                     _options.Value.Issuer),
-                new Claim(DNTClaimTypes.SerialNumber, user.SerialNumber, ClaimValueTypes.String,
-                    _options.Value.Issuer),
-                new Claim(DNTClaimTypes.UserData, user.Id.ToString(), ClaimValueTypes.String,
+                new Claim(UserClaimTypes.SerialNumber, user.SerialNumber, ClaimValueTypes.String,
                     _options.Value.Issuer)
             };
 
@@ -132,7 +132,7 @@ namespace DNTFrameworkCoreTemplateAPI.API.Authentication
             var roles = await FindUserRolesIncludeClaimsAsync(user.Id);
             foreach (var role in roles)
             {
-                claims.Add(new Claim(DNTClaimTypes.Role, role.Name, ClaimValueTypes.String,
+                claims.Add(new Claim(UserClaimTypes.Role, role.Name, ClaimValueTypes.String,
                     _options.Value.Issuer));
             }
 
@@ -147,19 +147,23 @@ namespace DNTFrameworkCoreTemplateAPI.API.Authentication
             var grantedPermissions = user.Permissions.Where(p => p.IsGranted).Select(a => a.Name);
             var deniedPermissions = user.Permissions.Where(p => !p.IsGranted).Select(a => a.Name);
 
-            var permissions = rolePermissions.Union(grantedPermissions).Except(deniedPermissions);
+            var permissions = rolePermissions.Union(grantedPermissions).Except(deniedPermissions).ToList();
             foreach (var permission in permissions)
             {
-                claims.Add(new Claim(DNTClaimTypes.Permission, permission, ClaimValueTypes.String,
+                claims.Add(new Claim(UserClaimTypes.Permission, permission, ClaimValueTypes.String,
                     _options.Value.Issuer));
             }
 
+            //Todo: recommended approach to minimize size of  token/cookie
+            // permissions=new[] {"48", "65", "6C", "6C", "6F", "20", "57", "6F", "72", "6C", "64", "21"};
+            // claims.Add(new Claim(UserClaimTypes.PackedPermission, permissions.PackPermissionsToString()));
+
             //Todo: Set TenantId claim in MultiTenancy senarios     
-            // claims.Add(new Claim(DNTClaimTypes.TenantId, user.TenantId.ToString(), ClaimValueTypes.Integer64,
+            // claims.Add(new Claim(UserClaimTypes.TenantId, user.TenantId.ToString(), ClaimValueTypes.Integer64,
             // _options.Value.Issuer));
 
             //Todo: Set BranchId claim in MultiBranch senarios     
-            // claims.Add(new Claim(DNTClaimTypes.BranchId, user.BranchId.ToString(), ClaimValueTypes.Integer64,
+            // claims.Add(new Claim(UserClaimTypes.BranchId, user.BranchId.ToString(), ClaimValueTypes.Integer64,
             // _options.Value.Issuer));
 
             return claims;
@@ -176,9 +180,9 @@ namespace DNTFrameworkCoreTemplateAPI.API.Authentication
         private async Task<IList<Role>> FindUserRolesIncludeClaimsAsync(long userId)
         {
             var query = from role in _roles
-                        from userRoles in role.Users
-                        where userRoles.UserId == userId
-                        select role;
+                from userRoles in role.Users
+                where userRoles.UserId == userId
+                select role;
 
             return await query
                 .AsNoTracking()
@@ -190,10 +194,9 @@ namespace DNTFrameworkCoreTemplateAPI.API.Authentication
 
         private async Task<Maybe<User>> FindUserByNameAsync(string userName)
         {
-            var normalizedUserName = userName.ToUpperInvariant();
+            userName = userName.ToUpperInvariant();
 
-            return await _users.AsNoTracking()
-                .FirstOrDefaultAsync(x => x.NormalizedUserName == normalizedUserName);
+            return await _users.FirstOrDefaultAsync(x => x.NormalizedUserName == userName);
         }
     }
 }
